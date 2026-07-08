@@ -20,7 +20,7 @@ const SOURCE_CONFIG = {
 const getColor = (source) => SOURCE_CONFIG[source.toLowerCase()]?.color || '#9ca3af';
 const isClean = (source) => SOURCE_CONFIG[source.toLowerCase()]?.isClean || false;
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+const API_BASE_URL = 'https://energymixappserver.onrender.com/';
 
 export default function App() {
   const [mixData, setMixData] = useState(null);
@@ -31,7 +31,7 @@ export default function App() {
   useEffect(() => {
     async function fetchEnergyMix() {
       try {
-        const response = await fetch(`${API_BASE_URL}/energy-mix`);
+        const response = await fetch(`${API_BASE_URL}/api/energy-mix`);
         if (!response.ok) throw new Error(`Błąd serwera: ${response.status}`);
         const data = await response.json();
         setMixData(data);

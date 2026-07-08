@@ -18,7 +18,7 @@ export default function ChargingForm() {
     setWindowResult(null);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/charging-window?hours=${chargingHours}`);
+      const response = await fetch(`${API_BASE_URL}/api/charging-window?hours=${chargingHours}`);
       if (!response.ok) throw new Error(`Błąd serwera: ${response.status}`);
       const data = await response.json();
       setWindowResult(data);
