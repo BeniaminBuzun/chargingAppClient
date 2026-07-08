@@ -30,7 +30,7 @@ export default function EnergyMixApp() {
   useEffect(() => {
     async function fetchEnergyMix() {
       try {
-        const response = await fetch(`${API_BASE_URL}/energy-mix`);
+        const response = await fetch(`${API_BASE_URL}/api/energy-mix`);
         if (!response.ok) throw new Error(`Błąd serwera: ${response.status}`);
         const data = await response.json();
         setMixData(data);
