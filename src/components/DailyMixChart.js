@@ -15,7 +15,7 @@ export default function DailyMixChart({ dayLabel, chartData, totalClean }) {
       </div>
 
       <div className="chart-wrapper">
-        <svg viewBox="0 0 32 32" className="chart-svg">
+        <svg viewBox="-6 -6 44 44" className="chart-svg">
           {chartData.map((entry, index) => {
             if (entry.value === 0) return null;
 
