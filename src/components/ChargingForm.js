@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-const API_BASE_URL = 'https://energymixappserver.onrender.com';
+const API_BASE_URL = 'https://energymixappserver.onrender.com/';
 
 export default function ChargingForm() {
   const [chargingHours, setChargingHours] = useState(2);
@@ -10,7 +10,6 @@ export default function ChargingForm() {
   const [windowResult, setWindowResult] = useState(null);
   const [windowError, setWindowError] = useState(null);
 
-  // Funkcja wysyłająca zapytanie do backendu
   const handleFetchChargingWindow = async (e) => {
     e.preventDefault();
     setWindowLoading(true);
@@ -18,7 +17,7 @@ export default function ChargingForm() {
     setWindowResult(null);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/charging-window?hours=${chargingHours}`);
+      const response = await fetch(`${API_BASE_URL}/charging-window?hours=${chargingHours}`);
       if (!response.ok) throw new Error(`Błąd serwera: ${response.status}`);
       const data = await response.json();
       setWindowResult(data);
@@ -30,7 +29,6 @@ export default function ChargingForm() {
     }
   };
 
-  // Helper do formatowania daty
   const formatDate = (isoString) => {
     return new Date(isoString).toLocaleString('pl-PL', {
       day: '2-digit', month: '2-digit', year: 'numeric',
@@ -39,13 +37,13 @@ export default function ChargingForm() {
   };
 
   return (
-    <section className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 max-w-2xl mx-auto">
-      <h2 className="text-2xl font-semibold mb-6 text-center">Zaplanuj optymalne ładowanie</h2>
+    <section className="card form-card">
+      <h2 className="section-title text-center" style={{ borderBottom: 'none' }}>Zaplanuj optymalne ładowanie</h2>
       
-      <form onSubmit={handleFetchChargingWindow} className="flex flex-col space-y-6">
+      <form onSubmit={handleFetchChargingWindow} className="form-flex">
         <div>
-          <label htmlFor="chargingHours" className="block text-sm font-medium text-gray-700 mb-2">
-            Czas ładowania urządzenia: <span className="font-bold text-blue-600">{chargingHours} godz.</span>
+          <label htmlFor="chargingHours" className="form-label">
+            Czas ładowania urządzenia: <span className="highlight-text">{chargingHours} godz.</span>
           </label>
           <input
             type="range"
@@ -53,43 +51,34 @@ export default function ChargingForm() {
             min="1" max="6" step="1"
             value={chargingHours}
             onChange={(e) => setChargingHours(Number(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+            className="range-input"
           />
-          <div className="flex justify-between text-xs text-gray-400 mt-1">
+          <div className="range-labels">
             <span>1 godz.</span><span>6 godz.</span>
           </div>
         </div>
-        <button
-          type="submit"
-          disabled={windowLoading}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:bg-gray-400 flex justify-center items-center"
-        >
+        <button type="submit" disabled={windowLoading} className="btn-submit">
           {windowLoading ? 'Obliczanie okna w backendzie...' : 'Znajdź najlepszy czas'}
         </button>
       </form>
 
-      {windowError && (
-        <div className="mt-6 bg-red-50 text-red-700 p-4 rounded-xl text-center border border-red-200">
-          {windowError}
-        </div>
-      )}
+      {windowError && <div className="alert-error">{windowError}</div>}
 
-      {/* WYNIK Z BACKENDU */}
       {windowResult && (
-        <div className="mt-8 p-6 bg-blue-50 border border-blue-100 rounded-xl">
-          <h3 className="text-lg font-bold text-blue-900 mb-4">Wynik optymalizacji (Okienko {windowResult.windowHours}h)</h3>
-          <ul className="space-y-3">
-            <li className="flex flex-col sm:flex-row sm:justify-between">
-              <span className="text-gray-600">Data i godzina rozpoczęcia:</span>
-              <span className="font-semibold text-gray-900">{formatDate(windowResult.start)}</span>
+        <div className="result-box">
+          <h3 className="result-title">Wynik optymalizacji (Okienko {windowResult.windowHours}h)</h3>
+          <ul className="result-list">
+            <li className="result-item">
+              <span className="result-label">Data i godzina rozpoczęcia:</span>
+              <span className="result-value">{formatDate(windowResult.start)}</span>
             </li>
-            <li className="flex flex-col sm:flex-row sm:justify-between">
-              <span className="text-gray-600">Data i godzina zakończenia:</span>
-              <span className="font-semibold text-gray-900">{formatDate(windowResult.end)}</span>
+            <li className="result-item">
+              <span className="result-label">Data i godzina zakończenia:</span>
+              <span className="result-value">{formatDate(windowResult.end)}</span>
             </li>
-            <li className="flex flex-col sm:flex-row sm:justify-between pt-2 border-t border-blue-200 items-baseline">
-              <span className="text-gray-600">Średni procent udziału czystej energii:</span>
-              <span className="font-bold text-green-600 text-xl">{windowResult.averageCleanEnergyPercentage.toFixed(2)}%</span>
+            <li className="result-item result-divider">
+              <span className="result-label">Średni procent udziału czystej energii:</span>
+              <span className="result-highlight">{windowResult.averageCleanEnergyPercentage.toFixed(2)}%</span>
             </li>
           </ul>
         </div>
