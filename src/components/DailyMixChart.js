@@ -53,19 +53,6 @@ export default function DailyMixChart({ dayLabel, chartData, totalClean }) {
         </svg>
       </div>
 
-      {/* Ręcznie stworzona Legenda */}
-      <div className="mt-4 flex flex-wrap justify-center gap-3">
-        {chartData.map((entry, index) => (
-          <div key={`legend-${index}`} className="flex items-center text-xs text-gray-600">
-            <span 
-              className="w-3 h-3 rounded-full mr-1.5 inline-block shadow-sm" 
-              style={{ backgroundColor: entry.color }}
-            ></span>
-            <span className="font-medium">{entry.name}</span>
-            <span className="ml-1 text-gray-400">({entry.value.toFixed(1)}%)</span>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }

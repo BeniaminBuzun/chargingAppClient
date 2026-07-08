@@ -1,5 +1,5 @@
 'use client';
-
+import './globals.css';
 import React, { useState, useEffect } from 'react';
 import DailyMixChart from '../components/DailyMixChart';
 import ChargingForm from '../components/ChargingForm';

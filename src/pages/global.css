@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* You can also add a background color to the body here if needed */
+body {
+  @apply bg-gray-50;
+}
