@@ -1,4 +1,5 @@
 'use client';
+import './global.css';
 
 import React, { useState, useEffect } from 'react';
 import DailyMixChart from '../components/DailyMixChart';
@@ -19,7 +20,7 @@ const SOURCE_CONFIG = {
 const getColor = (source) => SOURCE_CONFIG[source.toLowerCase()]?.color || '#9ca3af';
 const isClean = (source) => SOURCE_CONFIG[source.toLowerCase()]?.isClean || false;
 
-const API_BASE_URL = 'https://energymixappserver.onrender.com/';
+const API_BASE_URL = 'https://energymixappserver.onrender.com';
 
 export default function EnergyMixApp() {
   const [mixData, setMixData] = useState(null);

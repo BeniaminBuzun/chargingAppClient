@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-const API_BASE_URL = 'https://energymixappserver.onrender.com/';
+const API_BASE_URL = 'https://energymixappserver.onrender.com';
 
 export default function ChargingForm() {
   const [chargingHours, setChargingHours] = useState(2);
